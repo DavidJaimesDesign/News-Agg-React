@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-const DEFAULT_QUERY = 'redux';
+const DEFAULT_QUERY = '';
 const DEFAULT_PAGE = 0;
 const DEFAULT_HPP = '100';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
@@ -20,8 +20,6 @@ class App extends Component {
     this.setSearchTopstories = this.setSearchTopstories.bind(this);
     this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
     this.needsToSearchTopstories = this.needsToSearchTopstories.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
-    this.onSearchSubmit = this.onSearchSubmit.bind(this);
   }
   setSearchTopstories(result) {
     const { hits, page } = result;
@@ -49,19 +47,6 @@ class App extends Component {
     return !this.state.results[query];
   }
 
-  onSearchChange(event) {
-    this.setState({ query: event.target.value });
-  }
-
-  onSearchSubmit(event) {
-    const { query } = this.state;
-    this.setState({ searchKey: query });
-    if (this.needsToSearchTopstories(query)) {
-      this.fetchSearchTopstories(query, DEFAULT_PAGE);
-    }
-    event.preventDefault();
-  }
-
   render() {
   const { query, results, searchKey } = this.state;
   const page = (results && results[searchKey] && results[searchKey].page) || 0;
@@ -73,12 +58,6 @@ class App extends Component {
   );
   }
 }
-
-const Search = ({ value, onChange, onSubmit, children }) =>
-  <form onSubmit={onSubmit}>
-    <input type="text" value={value} onChange={onChange} />
-    <button type="submit">{children}</button>
-  </form>
 
 const Table = ({ list }) =>
   <div className="table">
@@ -100,8 +79,4 @@ const Table = ({ list }) =>
     )}    
   </div>
 
-const Button = ({ onClick, children }) =>
-  <button onClick={onClick} type="button">
-    {children}
-  </button>
 export default App;
