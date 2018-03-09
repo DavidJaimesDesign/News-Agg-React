@@ -11,6 +11,7 @@ const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
 
 //Medium path variables
+const TC_PATH_BASE=''
 
 //Reddit path variables
 
