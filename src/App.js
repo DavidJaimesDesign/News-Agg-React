@@ -68,17 +68,7 @@ class App extends Component {
   const list = (results && results[searchKey] && results[searchKey].hits) || [];
   return (
   <div className="page">
-    <div className="interactions">
-      <Search value={query} onChange={this.onSearchChange} onSubmit={this.onSearchSubmit}>
-        Search
-      </Search>
-    </div>
     <Table list={list} />
-    <div className="interactions">
-      <Button onClick={() => this.fetchSearchTopstories(searchKey, page + 1)}>
-        More
-      </Button>
-    </div>
   </div>
   );
   }
