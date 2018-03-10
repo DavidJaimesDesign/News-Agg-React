@@ -15,6 +15,26 @@ const PARAM_HPP = 'hitsPerPage=';
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
 //TODO: Add attribution link for TechCrunch api NewsAPI.org
+
+//Reddit Api configuration
+const redditClientId = process.env.REACT_APP_REDDIT_CLIENT_ID
+const redditSecret = process.env.REACT_APP_REDDIT_SECRECT
+const redditUser = process.env.REACT_APP_REDDIT_USER
+const redditPw = process.env.REACT_APP_REDDIT_PW
+
+console.log(redditClientId)
+console.log(redditSecret)
+console.log(redditUser)
+console.log(redditPw)
+const snoowrap = require('snoowrap')
+const otherRequester = new snoowrap({
+	userAgent: 'News Ag page',
+	clientId: redditClientId,
+	clientSecret: redditSecret,
+	username: redditUser,
+	password: redditPw
+})
+
 class App extends Component {
  	constructor(props) {
  		super(props);
