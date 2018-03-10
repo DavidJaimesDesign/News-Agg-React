@@ -10,11 +10,11 @@ const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
 
-//Medium path variables
-const TC_PATH_BASE=''
+//Tech Chrunch path variables
+//Use NewsApi client library for this 
+const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
-//Reddit path variables
-
+//TODO: Add attribution link for TechCrunch api NewsAPI.org
 class App extends Component {
  	constructor(props) {
  		super(props);
