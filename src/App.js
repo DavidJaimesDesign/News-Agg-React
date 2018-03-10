@@ -101,7 +101,7 @@ const HNTable = ({ list }) =>
  				<span style={{ width: '30%' }}>
   					{item.author}
 				</span>
-				<span style={{ width: '15%' }}>
+ 				<span style={{ width: '30%' }}>
   					{item.num_comments}
 				</span>
 				<span style={{ width: '15%' }}>
