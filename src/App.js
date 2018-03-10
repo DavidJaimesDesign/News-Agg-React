@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+
 //Hacker news Path variables
-const DEFAULT_QUERY = '';
-const DEFAULT_PAGE = 0;
-const DEFAULT_HPP = '100';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PATH_SEARCH_TAGS = 'tags='
@@ -12,15 +10,12 @@ const PATH_SEARCH_OFFSET = 'offset='
 const PARAM_TAGS='front_page'
 const PARAM_LENGTH='5'
 const PARAM_OFFSET='0'
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-const PARAM_HPP = 'hitsPerPage=';
 
 //Tech Chrunch path variables
 //Use NewsApi client library for this 
+//TODO: Add attribution link for TechCrunch api NewsAPI.org
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
-//TODO: Add attribution link for TechCrunch api NewsAPI.org
 
 //Reddit Api configuration
 const REDDIT_CLIENT_ID = process.env.REACT_APP_REDDIT_CLIENT_ID
@@ -35,22 +30,16 @@ class App extends Component {
  		this.state = {
 			results: null,
 			HNresults: null,
-			query: DEFAULT_QUERY,
-			searchKey: '',
+			HNresultsKey: '',
  		};
 		this.setHNTopstories = this.setHNTopstories.bind(this);
 		this.fetchHNTopstories = this.fetchHNTopstories.bind(this);
-		this.setHNTopstoriesTwo = this.setHNTopstoriesTwo.bind(this);
  	}
 
-	fetchHNTopstories(query, page) {
+	fetchHNTopstories() {
 		fetch(`${PATH_BASE}${PATH_SEARCH}?${PATH_SEARCH_TAGS}${PARAM_TAGS}&${PATH_SEARCH_LENGTH}${PARAM_LENGTH}&${PATH_SEARCH_OFFSET}${PARAM_OFFSET}`)
 		.then(response => response.json())
-		.then(result => this.setHNTopstoriesTwo(result))
-
-		fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
-		.then(response => response.json())
-		.then(result => this.setHNTopstories(result));
+		.then(result => this.setHNTopstories(result))
 	}
 
 	fetchRedditTopStories(){
@@ -69,21 +58,11 @@ class App extends Component {
 	}
 
  	setHNTopstories(result) {
-		const { hits, page } = result;
-		const { searchKey } = this.state;
-		const oldHits = page === 0 ? [] : this.state.results[searchKey].hits;
-		const updatedHits = [ ...oldHits, ...hits ];
-		this.setState({
-			results: { ...this.state.results, [searchKey]: { hits: updatedHits, page }}
-		});
- 	}
-
- 	setHNTopstoriesTwo(result) {
 		const { hits } = result
-		const { searchKey } = this.state
+		const { HNresultsKey } = this.state
 		const hitsArr = [...hits]
 		this.setState({
-			HNresults: { ...this.state.results, [searchKey]: {hits: hitsArr}}
+			HNresults: { ...this.state.results, [HNresultsKey]: {hits: hitsArr}}
 		})
  	}
 
@@ -98,23 +77,21 @@ class App extends Component {
 	componentDidMount() {
 		const { query } = this.state;
 		this.setState({ searchKey: query });
-		this.fetchHNTopstories(query, DEFAULT_PAGE);
+		this.fetchHNTopstories();
 	}
 
 	render() {
-		const { query, results, searchKey, HNresults } = this.state;
- 		const HNlist = (results && results[searchKey] && results[searchKey].hits) || [];
-		const HNlist_two = ( HNresults && HNresults[searchKey] && HNresults[searchKey].hits) || [];
-		console.log(HNlist_two)
+		const { query, results, HNresultsKey, HNresults } = this.state;
+		const HNlist = ( HNresults && HNresults[HNresultsKey] && HNresults[HNresultsKey].hits) || [];
  		return (
  			<div className="page">
-				<Table list={HNlist_two} />
+				<HNTable list={HNlist} />
  			</div>
  		);
  	}
 }
 
-const Table = ({ list }) =>
+const HNTable = ({ list }) =>
  	<div className="table">
 		{ list.map((item) =>
 			<div key={item.objectID} className="table-row">
