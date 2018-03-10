@@ -6,6 +6,12 @@ const DEFAULT_PAGE = 0;
 const DEFAULT_HPP = '100';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
+const PATH_SEARCH_TAGS = 'tags='
+const PATH_SEARCH_LENGTH = 'length='
+const PATH_SEARCH_OFFSET = 'offset='
+const PARAM_TAGS='front_page'
+const PARAM_LENGTH='5'
+const PARAM_OFFSET='0'
 const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
@@ -17,35 +23,50 @@ const TC_KEY=process.env.REACT_APP_TC_API_KEY
 //TODO: Add attribution link for TechCrunch api NewsAPI.org
 
 //Reddit Api configuration
-const redditClientId = process.env.REACT_APP_REDDIT_CLIENT_ID
-const redditSecret = process.env.REACT_APP_REDDIT_SECRECT
-const redditUser = process.env.REACT_APP_REDDIT_USER
-const redditPw = process.env.REACT_APP_REDDIT_PW
+const REDDIT_CLIENT_ID = process.env.REACT_APP_REDDIT_CLIENT_ID
+const REDDIT_SECRET = process.env.REACT_APP_REDDIT_SECRECT
+const REDDIT_USER = process.env.REACT_APP_REDDIT_USER
+const REDDIT_PW = process.env.REACT_APP_REDDIT_PW
 
-console.log(redditClientId)
-console.log(redditSecret)
-console.log(redditUser)
-console.log(redditPw)
-const snoowrap = require('snoowrap')
-const otherRequester = new snoowrap({
-	userAgent: 'News Ag page',
-	clientId: redditClientId,
-	clientSecret: redditSecret,
-	username: redditUser,
-	password: redditPw
-})
 
 class App extends Component {
  	constructor(props) {
  		super(props);
  		this.state = {
 			results: null,
+			HNresults: null,
 			query: DEFAULT_QUERY,
 			searchKey: '',
  		};
 		this.setHNTopstories = this.setHNTopstories.bind(this);
 		this.fetchHNTopstories = this.fetchHNTopstories.bind(this);
+		this.setHNTopstoriesTwo = this.setHNTopstoriesTwo.bind(this);
  	}
+
+	fetchHNTopstories(query, page) {
+		fetch(`${PATH_BASE}${PATH_SEARCH}?${PATH_SEARCH_TAGS}${PARAM_TAGS}&${PATH_SEARCH_LENGTH}${PARAM_LENGTH}&${PATH_SEARCH_OFFSET}${PARAM_OFFSET}`)
+		.then(response => response.json())
+		.then(result => this.setHNTopstoriesTwo(result))
+
+		fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
+		.then(response => response.json())
+		.then(result => this.setHNTopstories(result));
+	}
+
+	fetchRedditTopStories(){
+		const snoowrap = require('snoowrap')
+		const otherRequester = new snoowrap({
+			userAgent: 'News Ag page',
+			clientId: `${REDDIT_CLIENT_ID}`,
+			clientSecret: `${REDDIT_SECRET}`,
+			username: `${REDDIT_USER}`,
+			password: `${REDDIT_PW}`
+		})
+	}
+
+	fetchTechCrunchTopStories(){
+
+	}
 
  	setHNTopstories(result) {
 		const { hits, page } = result;
@@ -57,10 +78,21 @@ class App extends Component {
 		});
  	}
 
-	fetchHNTopstories(query, page) {
-		fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
-		.then(response => response.json())
-		.then(result => this.setHNTopstories(result));
+ 	setHNTopstoriesTwo(result) {
+		const { hits } = result
+		const { searchKey } = this.state
+		const hitsArr = [...hits]
+		this.setState({
+			HNresults: { ...this.state.results, [searchKey]: {hits: hitsArr}}
+		})
+ 	}
+
+	setRedditTopStories(result){
+
+	}
+
+	setTechCrunchTopStories(result){
+
 	}
 
 	componentDidMount() {
@@ -70,12 +102,13 @@ class App extends Component {
 	}
 
 	render() {
-		const { query, results, searchKey } = this.state;
- 		const page = (results && results[searchKey] && results[searchKey].page) || 0;
- 		const list = (results && results[searchKey] && results[searchKey].hits) || [];
+		const { query, results, searchKey, HNresults } = this.state;
+ 		const HNlist = (results && results[searchKey] && results[searchKey].hits) || [];
+		const HNlist_two = ( HNresults && HNresults[searchKey] && HNresults[searchKey].hits) || [];
+		console.log(HNlist_two)
  		return (
  			<div className="page">
-				<Table list={list} />
+				<Table list={HNlist_two} />
  			</div>
  		);
  	}
