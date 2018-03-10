@@ -43,11 +43,11 @@ class App extends Component {
 			query: DEFAULT_QUERY,
 			searchKey: '',
  		};
-		this.setSearchTopstories = this.setSearchTopstories.bind(this);
-		this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
+		this.setHNTopstories = this.setHNTopstories.bind(this);
+		this.fetchHNTopstories = this.fetchHNTopstories.bind(this);
  	}
 
- 	setSearchTopstories(result) {
+ 	setHNTopstories(result) {
 		const { hits, page } = result;
 		const { searchKey } = this.state;
 		const oldHits = page === 0 ? [] : this.state.results[searchKey].hits;
@@ -57,20 +57,19 @@ class App extends Component {
 		});
  	}
 
-	fetchSearchTopstories(query, page) {
+	fetchHNTopstories(query, page) {
 		fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
 		.then(response => response.json())
-		.then(result => this.setSearchTopstories(result));
+		.then(result => this.setHNTopstories(result));
 	}
 
 	componentDidMount() {
 		const { query } = this.state;
 		this.setState({ searchKey: query });
-		this.fetchSearchTopstories(query, DEFAULT_PAGE);
+		this.fetchHNTopstories(query, DEFAULT_PAGE);
 	}
 
 	render() {
-		console.log(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${query}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
 		const { query, results, searchKey } = this.state;
  		const page = (results && results[searchKey] && results[searchKey].page) || 0;
  		const list = (results && results[searchKey] && results[searchKey].hits) || [];
