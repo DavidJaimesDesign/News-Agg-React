@@ -42,6 +42,10 @@ class App extends Component {
 		.then(result => this.setHNTopstories(result))
 	}
 
+	fetchTechCrunchTopStories(){
+
+	}
+
 	fetchRedditTopStories(){
 		const snoowrap = require('snoowrap')
 		const otherRequester = new snoowrap({
@@ -51,10 +55,6 @@ class App extends Component {
 			username: `${REDDIT_USER}`,
 			password: `${REDDIT_PW}`
 		})
-	}
-
-	fetchTechCrunchTopStories(){
-
 	}
 
  	setHNTopstories(result) {
@@ -95,18 +95,11 @@ const HNTable = ({ list }) =>
  	<div className="table">
 		{ list.map((item) =>
 			<div key={item.objectID} className="table-row">
-				<span style={{ width: '40%' }}>
-          			<a href={item.url}>{item.title}</a>
-        		</span>
- 				<span style={{ width: '30%' }}>
-  					{item.author}
-				</span>
- 				<span style={{ width: '30%' }}>
-  					{item.num_comments}
-				</span>
-				<span style={{ width: '15%' }}>
-					{item.points}
-				</span>
+          			<div><a href={item.url}>{item.title}</a></div>
+  					<div>
+						<p> "Author: "{item.author} </p>
+						<p> {item.num_comments} <a href={"https://news.ycombinator.com/item?id=" + item.objectID}>Comments</a></p>
+					</div>
  			</div>
  		)}    
  	</div>
