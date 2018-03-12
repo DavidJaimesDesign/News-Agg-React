@@ -97,10 +97,10 @@ class App extends Component {
 		const { HNresultsKey, HNresults, TCresults, TCresultsKey } = this.state;
 		const HNlist = ( HNresults && HNresults[HNresultsKey] && HNresults[HNresultsKey].hits) || [];
 		const TClist = ( TCresults && TCresults[TCresultsKey] && TCresults[TCresultsKey].articles) || [];
-		console.log(TClist)
  		return (
  			<div className="page">
 				<HNTable list={HNlist} />
+				<TCTable list={TClist} />
  			</div>
  		);
  	}
@@ -112,11 +112,23 @@ const HNTable = ({ list }) =>
 			<div key={item.objectID} className="table-row">
           			<div><a href={item.url}>{item.title}</a></div>
   					<div>
-						<p> "Author: "{item.author} </p>
+						<p> Author: {item.author} </p>
 						<p> {item.num_comments} <a href={"https://news.ycombinator.com/item?id=" + item.objectID}>Comments</a></p>
 					</div>
  			</div>
  		)}    
  	</div>
 
+const TCTable = ({ list }) =>
+ 	<div className="table">
+		{ list.map((item) =>
+			<div key={item.publishedAt} className="table-row">
+          			<div><a href={item.url}>{item.title}</a></div>
+  					<div>
+						<p> Author: {item.author} </p>
+						<p> {item.description} </p>
+					</div>
+ 			</div>
+ 		)}    
+ 	</div>
 export default App;
