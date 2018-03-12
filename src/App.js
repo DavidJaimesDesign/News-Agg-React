@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 //Hacker news Path variables
+//TODO: Rename these variables so they focus on Hacker News
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PATH_SEARCH_TAGS = 'tags='
@@ -14,6 +15,8 @@ const PARAM_OFFSET='0'
 //Tech Chrunch path variables
 //Use NewsApi client library for this 
 //TODO: Add attribution link for TechCrunch api NewsAPI.org
+const TC_BASE_PATH="https://newsapi.org/v2/"
+const TC_SEARCH_PARAMS="top-headlines?sources=techcrunch&apiKey="
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
 
@@ -28,12 +31,15 @@ class App extends Component {
  	constructor(props) {
  		super(props);
  		this.state = {
-			results: null,
 			HNresults: null,
 			HNresultsKey: '',
+			TCresults:null,
+			TCresultsKey: '',
  		};
 		this.setHNTopstories = this.setHNTopstories.bind(this);
 		this.fetchHNTopstories = this.fetchHNTopstories.bind(this);
+		this.fetchTechCrunchTopStories = this.fetchTechCrunchTopStories.bind(this);
+		this.setTechCrunchTopStories = this.setTechCrunchTopStories.bind(this);
  	}
 
 	fetchHNTopstories() {
@@ -43,7 +49,9 @@ class App extends Component {
 	}
 
 	fetchTechCrunchTopStories(){
-
+		fetch(`${TC_BASE_PATH}${TC_SEARCH_PARAMS}${TC_KEY}`)
+		.then(response => response.json())
+		.then(result => this.setTechCrunchTopStories(result))
 	}
 
 	fetchRedditTopStories(){
@@ -62,27 +70,34 @@ class App extends Component {
 		const { HNresultsKey } = this.state
 		const hitsArr = [...hits]
 		this.setState({
-			HNresults: { ...this.state.results, [HNresultsKey]: {hits: hitsArr}}
+			HNresults: { [HNresultsKey]: {hits: hitsArr}}
 		})
  	}
 
 	setRedditTopStories(result){
-
 	}
 
 	setTechCrunchTopStories(result){
-
+		const { articles } = result
+		const { TCresultsKey } = this.state
+		const articlesArr= [...articles]
+		this.setState({
+			TCresults: { [TCresultsKey]: {articles: articlesArr}}
+		})
 	}
 
 	componentDidMount() {
 		const { query } = this.state;
 		this.setState({ searchKey: query });
 		this.fetchHNTopstories();
+		this.fetchTechCrunchTopStories();
 	}
 
 	render() {
-		const { query, results, HNresultsKey, HNresults } = this.state;
+		const { HNresultsKey, HNresults, TCresults, TCresultsKey } = this.state;
 		const HNlist = ( HNresults && HNresults[HNresultsKey] && HNresults[HNresultsKey].hits) || [];
+		const TClist = ( TCresults && TCresults[TCresultsKey] && TCresults[TCresultsKey].articles) || [];
+		console.log(TClist)
  		return (
  			<div className="page">
 				<HNTable list={HNlist} />
