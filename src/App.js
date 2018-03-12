@@ -25,6 +25,7 @@ const REDDIT_CLIENT_ID = process.env.REACT_APP_REDDIT_CLIENT_ID
 const REDDIT_SECRET = process.env.REACT_APP_REDDIT_SECRECT
 const REDDIT_USER = process.env.REACT_APP_REDDIT_USER
 const REDDIT_PW = process.env.REACT_APP_REDDIT_PW
+const SUBREDDIT_LIST = 'askscience+coding+compsci+coolgithubprojects+linux+programming'
 
 
 class App extends Component {
@@ -35,11 +36,15 @@ class App extends Component {
 			HNresultsKey: '',
 			TCresults:null,
 			TCresultsKey: '',
+			RedditResults: null,
+			RedditResultsKey: ''
  		};
 		this.setHNTopstories = this.setHNTopstories.bind(this);
 		this.fetchHNTopstories = this.fetchHNTopstories.bind(this);
 		this.fetchTechCrunchTopStories = this.fetchTechCrunchTopStories.bind(this);
 		this.setTechCrunchTopStories = this.setTechCrunchTopStories.bind(this);
+		this.fetchRedditTopStories = this.fetchRedditTopStories.bind(this);
+		this.setSetRedditTopStories = this.setRedditTopStories.bind(this);
  	}
 
 	fetchHNTopstories() {
@@ -63,6 +68,7 @@ class App extends Component {
 			username: `${REDDIT_USER}`,
 			password: `${REDDIT_PW}`
 		})
+		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 10}).then(console.log)
 	}
 
  	setHNTopstories(result) {
@@ -91,6 +97,7 @@ class App extends Component {
 		this.setState({ searchKey: query });
 		this.fetchHNTopstories();
 		this.fetchTechCrunchTopStories();
+		this.fetchRedditTopStories();
 	}
 
 	render() {
