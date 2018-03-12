@@ -68,7 +68,8 @@ class App extends Component {
 			username: `${REDDIT_USER}`,
 			password: `${REDDIT_PW}`
 		})
-		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 10}).then(console.log)
+		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 10})
+		.then(response => this.setRedditTopStories(response))
 	}
 
  	setHNTopstories(result) {
@@ -81,6 +82,9 @@ class App extends Component {
  	}
 
 	setRedditTopStories(result){
+		this.setState({
+			RedditResults: result
+		})
 	}
 
 	setTechCrunchTopStories(result){
@@ -101,13 +105,16 @@ class App extends Component {
 	}
 
 	render() {
-		const { HNresultsKey, HNresults, TCresults, TCresultsKey } = this.state;
+		const { HNresultsKey, HNresults, TCresults, TCresultsKey, RedditResults} = this.state;
 		const HNlist = ( HNresults && HNresults[HNresultsKey] && HNresults[HNresultsKey].hits) || [];
 		const TClist = ( TCresults && TCresults[TCresultsKey] && TCresults[TCresultsKey].articles) || [];
+		const RedditList = ( RedditResults ) || [];
+		console.log(RedditList)
  		return (
  			<div className="page">
 				<HNTable list={HNlist} />
 				<TCTable list={TClist} />
+				<RedditTable list={RedditList} />
  			</div>
  		);
  	}
@@ -138,4 +145,17 @@ const TCTable = ({ list }) =>
  			</div>
  		)}    
  	</div>
+
+const RedditTable = ({ list }) =>
+ 	<div className="table">
+		{ list.map((item) =>
+			<div key={item.created} className="table-row">
+          			<div><a href={item.url}>{item.title}</a></div>
+  					<div>
+						<p>{item.num_comments} <a href={"https://www.reddit.com" + item.permalink}>Comments</a></p>
+					</div>
+ 			</div>
+ 		)}    
+ 	</div>
+
 export default App;
