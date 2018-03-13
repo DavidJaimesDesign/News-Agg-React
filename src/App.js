@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Grid, Row, Col, PageHeader} from 'react-bootstrap';
+import GithubLogo from './GitHub-Mark-64px.png'
 //Hacker news Path variables
 //TODO: Rename these variables so they focus on Hacker News
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
@@ -111,7 +112,7 @@ class App extends Component {
  		return (
 			<Grid>
 				<Row>
-					<Col md={4} mdOffset={4}>
+					<Col md={4} mdOffset={5}>
 						<PageHeader>Take a Break</PageHeader>
 					</Col>
 				</Row>
@@ -125,8 +126,10 @@ class App extends Component {
 						<RedditTable list={RedditList} />
 					</Col>
 				<Row>
-					<Col md={4} mdOffset={4}>
-						<p>Link to github project here</p>
+					<Col md={4} mdOffset={5}>
+						<a href="https://github.com/DavidJaimesDesign/News-Agg-React">
+						<img src={GithubLogo} alt="GitHub Logo" />
+						</a>
 					</Col>
 				</Row>
 			</Grid>
@@ -135,41 +138,68 @@ class App extends Component {
 }
 
 const HNTable = ({ list }) =>
- 	<div className="table">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Hacker News
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 		{ list.map((item) =>
-			<div key={item.objectID} className="table-row">
-          			<div><a href={item.url}>{item.title}</a></div>
-  					<div>
-						<p> Author: {item.author} </p>
-						<p> {item.num_comments} <a href={"https://news.ycombinator.com/item?id=" + item.objectID}>Comments</a></p>
-					</div>
- 			</div>
+			<tr>
+          		<td>
+					<a href={item.url}>{item.title}</a>
+					<p> Author: {item.author} </p>
+					<p> {item.num_comments} <a href={"https://news.ycombinator.com/item?id=" + item.objectID}>Comments</a></p>
+				</td>
+			</tr>
  		)}    
- 	</div>
+		</tbody>
+	</table>
 
 const TCTable = ({ list }) =>
- 	<div className="table">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Tech Crunch
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 		{ list.map((item) =>
-			<div key={item.publishedAt} className="table-row">
-          			<div><a href={item.url}>{item.title}</a></div>
-  					<div>
-						<p> Author: {item.author} </p>
-						<p> {item.description} </p>
-					</div>
- 			</div>
+			<tr>
+          		<td>
+          			<a href={item.url}>{item.title}</a>
+					<p> Author: {item.author} </p>
+					<p> {item.description} </p>
+				</td>
+			</tr>
  		)}    
- 	</div>
+		</tbody>
+	</table>
 
 const RedditTable = ({ list }) =>
- 	<div className="table">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Reddit 
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 		{ list.map((item) =>
-			<div key={item.created} className="table-row">
-          			<div><a href={item.url}>{item.title}</a></div>
-  					<div>
-						<p>{item.num_comments} <a href={"https://www.reddit.com" + item.permalink}>Comments</a></p>
-					</div>
- 			</div>
+			<tr>
+          		<td>
+          			<a href={item.url}>{item.title}</a>
+					<p>{item.num_comments} <a href={"https://www.reddit.com" + item.permalink}>Comments</a></p>
+				</td>
+			</tr>
  		)}    
- 	</div>
+		</tbody>
+	</table>
 
 export default App;
