@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+import './index.css';
 import {Grid, Row, Col, PageHeader} from 'react-bootstrap';
 import GithubLogo from './GitHub-Mark-64px.png'
 //Hacker news Path variables
@@ -112,8 +115,11 @@ class App extends Component {
  		return (
 			<Grid>
 				<Row>
-					<Col lg={4} md={4} mdOffset={5}>
-						<PageHeader>Take a Break</PageHeader>
+					<Col lg={4} md={4} mdOffset={4}>
+						<PageHeader className = "center_text break_title">
+						<h1>Take a Break</h1>
+						<h4> Read something useful</h4>
+						</PageHeader>
 					</Col>
 				</Row>
 					<Col lg={6} md={6}>
@@ -124,10 +130,13 @@ class App extends Component {
 						<RedditTable list={RedditList} />
 					</Col>
 				<Row>
-					<Col lg={4} md={4} mdOffset={5}>
-						<a href="https://github.com/DavidJaimesDesign/News-Agg-React">
-						<img src={GithubLogo} alt="GitHub Logo" />
-						</a>
+					<Col lg={4} md={4} mdOffset={4}>
+						<div className="center_text">
+							<a href="https://github.com/DavidJaimesDesign/News-Agg-React">
+								<img src={GithubLogo} alt="GitHub Logo" />
+								<p className="disguise_link"> About </p>
+							</a>
+						</div>
 					</Col>
 				</Row>
 			</Grid>
@@ -136,8 +145,8 @@ class App extends Component {
 }
 
 const HNTable = ({ list }) =>
-	<table className="table table-hover table-bordered table-striped">
-		<thead>
+	<table className="table table-hover table-bordered break_table">
+		<thead className="hn_table_header">
 			<tr>
 				<th scope="col">
 					Hacker News
@@ -159,8 +168,8 @@ const HNTable = ({ list }) =>
 	</table>
 
 const TCTable = ({ list }) =>
-	<table className="table table-hover table-bordered table-striped">
-		<thead>
+	<table className="table table-hover table-bordered break_table">
+		<thead className="tc_table_header">
 			<tr>
 				<th>
 					Tech Crunch
@@ -182,8 +191,8 @@ const TCTable = ({ list }) =>
 	</table>
 
 const RedditTable = ({ list }) =>
-	<table className="table table-hover table-bordered table-striped">
-		<thead>
+	<table className="table table-hover table-bordered break_table">
+		<thead className="reddit_table_header">
 			<tr>
 				<th>
 					Reddit 

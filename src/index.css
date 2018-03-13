@@ -1,5 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  background-color: #55cced;
+}
+
+.break_title {
+  font-family: 'Fredoka One', sans-serif;
+  color: white;
+}
+
+.hn_table_header{
+	background-color: #ff6600;
+	color: white;
+}
+
+.tc_table_header{
+	background-color: #008C00;
+	color: white;
+}
+
+.reddit_table_header{
+	background-color: #92bddf;
+	color: white;
+}
+
+.center_text{
+	text-align: center;
+}
+
+.disguise_link{
+  font-family: 'Fredoka One', sans-serif;
+  color: black;
+}
+
+.break_table{
+	background-color: #f2f2f2
 }
