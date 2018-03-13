@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "dotenv": "^5.0.1",
     "dotenv-expand": "^4.2.0",
     "react": "^16.2.0",

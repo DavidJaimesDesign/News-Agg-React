@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import {Grid, Row, Col, PageHeader} from 'react-bootstrap';
 //Hacker news Path variables
 //TODO: Rename these variables so they focus on Hacker News
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
@@ -9,7 +9,7 @@ const PATH_SEARCH_TAGS = 'tags='
 const PATH_SEARCH_LENGTH = 'length='
 const PATH_SEARCH_OFFSET = 'offset='
 const PARAM_TAGS='front_page'
-const PARAM_LENGTH='5'
+const PARAM_LENGTH='10'
 const PARAM_OFFSET='0'
 
 //Tech Chrunch path variables
@@ -26,7 +26,6 @@ const REDDIT_SECRET = process.env.REACT_APP_REDDIT_SECRECT
 const REDDIT_USER = process.env.REACT_APP_REDDIT_USER
 const REDDIT_PW = process.env.REACT_APP_REDDIT_PW
 const SUBREDDIT_LIST = 'askscience+coding+compsci+coolgithubprojects+linux+programming'
-
 
 class App extends Component {
  	constructor(props) {
@@ -109,13 +108,28 @@ class App extends Component {
 		const HNlist = ( HNresults && HNresults[HNresultsKey] && HNresults[HNresultsKey].hits) || [];
 		const TClist = ( TCresults && TCresults[TCresultsKey] && TCresults[TCresultsKey].articles) || [];
 		const RedditList = ( RedditResults ) || [];
-		console.log(RedditList)
  		return (
- 			<div className="page">
-				<HNTable list={HNlist} />
-				<TCTable list={TClist} />
-				<RedditTable list={RedditList} />
- 			</div>
+			<Grid>
+				<Row>
+					<Col md={4} mdOffset={4}>
+						<PageHeader>Take a Break</PageHeader>
+					</Col>
+				</Row>
+					<Col md={4}>
+						<HNTable list={HNlist} />
+					</Col>
+					<Col md={4}>
+						<TCTable list={TClist} />
+					</Col>
+					<Col md={4}>
+						<RedditTable list={RedditList} />
+					</Col>
+				<Row>
+					<Col md={4} mdOffset={4}>
+						<p>Link to github project here</p>
+					</Col>
+				</Row>
+			</Grid>
  		);
  	}
 }
