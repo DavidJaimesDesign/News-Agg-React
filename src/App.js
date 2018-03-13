@@ -146,13 +146,13 @@ const HNTable = ({ list }) =>
 		</thead>
 		<tbody>
 		{ list.map((item) =>
-			<tr>
-				<a href={item.url}>
-					<p>
-					<td>{item.title} - posted by {item.author}</td>
+			<tr key={item.objectID}>
+				<td>
+					<a href={item.url}>
+						<p> {item.title} - posted by {item.author}</p>
+					</a>
 					<a href={"https://news.ycombinator.com/item?id=" + item.objectID}>{item.num_comments} comments</a>
-					</p>
-				</a>
+				</td>
 			</tr>
  		)}    
 		</tbody>
@@ -169,9 +169,11 @@ const TCTable = ({ list }) =>
 		</thead>
 		<tbody>
 		{ list.map((item) =>
-			<tr>
+			<tr key={item.publishedAt}>
           		<td>
-          			<a href={item.url}>{item.title}</a>
+          			<a href={item.url}>
+						<p>{item.title}</p>
+					</a>
 					<p> Author: {item.author} </p>
 				</td>
 			</tr>
@@ -190,15 +192,13 @@ const RedditTable = ({ list }) =>
 		</thead>
 		<tbody>
 		{ list.map((item) =>
-			<tr>
-          		<a href={item.url}>
+			<tr key={item.created}>
           		<td>
-					<p>
-          			<td>{item.title}</td>
+          			<a href={item.url}>
+						<p>{item.title}</p>
+          			</a>
 					<a href={"https://www.reddit.com" + item.permalink}>{item.num_comments} comments</a>
-					</p>
 				</td>
-          		</a>
 			</tr>
  		)}    
 		</tbody>
