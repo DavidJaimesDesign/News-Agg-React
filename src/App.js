@@ -68,7 +68,7 @@ class App extends Component {
 			username: `${REDDIT_USER}`,
 			password: `${REDDIT_PW}`
 		})
-		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 10})
+		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 5})
 		.then(response => this.setRedditTopStories(response))
 	}
 
@@ -112,21 +112,19 @@ class App extends Component {
  		return (
 			<Grid>
 				<Row>
-					<Col md={4} mdOffset={5}>
+					<Col lg={4} md={4} mdOffset={5}>
 						<PageHeader>Take a Break</PageHeader>
 					</Col>
 				</Row>
-					<Col md={4}>
+					<Col lg={6} md={6}>
 						<HNTable list={HNlist} />
 					</Col>
-					<Col md={4}>
+					<Col lg={6} md={6}>
 						<TCTable list={TClist} />
-					</Col>
-					<Col md={4}>
 						<RedditTable list={RedditList} />
 					</Col>
 				<Row>
-					<Col md={4} mdOffset={5}>
+					<Col lg={4} md={4} mdOffset={5}>
 						<a href="https://github.com/DavidJaimesDesign/News-Agg-React">
 						<img src={GithubLogo} alt="GitHub Logo" />
 						</a>
@@ -138,10 +136,10 @@ class App extends Component {
 }
 
 const HNTable = ({ list }) =>
-	<table class="table">
+	<table className="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
-				<th>
+				<th scope="col">
 					Hacker News
 				</th>
 			</tr>
@@ -149,18 +147,19 @@ const HNTable = ({ list }) =>
 		<tbody>
 		{ list.map((item) =>
 			<tr>
-          		<td>
-					<a href={item.url}>{item.title}</a>
-					<p> Author: {item.author} </p>
-					<p> {item.num_comments} <a href={"https://news.ycombinator.com/item?id=" + item.objectID}>Comments</a></p>
-				</td>
+				<a href={item.url}>
+					<p>
+					<td>{item.title} - posted by {item.author}</td>
+					<a href={"https://news.ycombinator.com/item?id=" + item.objectID}>{item.num_comments} comments</a>
+					</p>
+				</a>
 			</tr>
  		)}    
 		</tbody>
 	</table>
 
 const TCTable = ({ list }) =>
-	<table class="table">
+	<table className="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
 				<th>
@@ -174,7 +173,6 @@ const TCTable = ({ list }) =>
           		<td>
           			<a href={item.url}>{item.title}</a>
 					<p> Author: {item.author} </p>
-					<p> {item.description} </p>
 				</td>
 			</tr>
  		)}    
@@ -182,7 +180,7 @@ const TCTable = ({ list }) =>
 	</table>
 
 const RedditTable = ({ list }) =>
-	<table class="table">
+	<table className="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
 				<th>
@@ -193,10 +191,14 @@ const RedditTable = ({ list }) =>
 		<tbody>
 		{ list.map((item) =>
 			<tr>
+          		<a href={item.url}>
           		<td>
-          			<a href={item.url}>{item.title}</a>
-					<p>{item.num_comments} <a href={"https://www.reddit.com" + item.permalink}>Comments</a></p>
+					<p>
+          			<td>{item.title}</td>
+					<a href={"https://www.reddit.com" + item.permalink}>{item.num_comments} comments</a>
+					</p>
 				</td>
+          		</a>
 			</tr>
  		)}    
 		</tbody>
