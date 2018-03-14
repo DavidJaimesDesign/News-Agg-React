@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
 
 body {
   margin: 0;
@@ -12,16 +13,22 @@ body {
 }
 
 .hn_table_header{
+    font-size: 16px;
+	font-family: 'Source Code Pro', sans-serif;
 	background-color: #ff6600;
 	color: white;
 }
 
 .tc_table_header{
+    font-size: 16px;
+	font-family: 'Source Code Pro', sans-serif;
 	background-color: #008C00;
 	color: white;
 }
 
 .reddit_table_header{
+    font-size: 16px;
+	font-family: 'Source Code Pro', sans-serif;
 	background-color: #92bddf;
 	color: white;
 }
@@ -34,7 +41,19 @@ body {
   font-family: 'Fredoka One', sans-serif;
   color: black;
 }
-
+.disguise_result_link{
+  font-size: 14px;
+  font-family: 'Source Code Pro', sans-serif;
+  color: black;
+}
+.disguise_comment_link{
+  font-family: 'Source Code Pro', sans-serif;
+  color: gray;
+}
 .break_table{
 	background-color: #f2f2f2
+}
+
+.break_footer{
+	padding-top: 60px;
 }

@@ -18,7 +18,6 @@ const PARAM_OFFSET='0'
 
 //Tech Chrunch path variables
 //Use NewsApi client library for this 
-//TODO: Add attribution link for TechCrunch api NewsAPI.org
 const TC_BASE_PATH="https://newsapi.org/v2/"
 const TC_SEARCH_PARAMS="top-headlines?sources=techcrunch&apiKey="
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
@@ -131,11 +130,12 @@ class App extends Component {
 					</Col>
 				<Row>
 					<Col lg={4} md={4} mdOffset={4}>
-						<div className="center_text">
+						<div className="center_text break_footer">
 							<a href="https://github.com/DavidJaimesDesign/News-Agg-React">
 								<img src={GithubLogo} alt="GitHub Logo" />
 								<p className="disguise_link"> About </p>
 							</a>
+							<p className="disguise_link">TechCrunch section is powered by NewsApi.org</p>
 						</div>
 					</Col>
 				</Row>
@@ -158,9 +158,9 @@ const HNTable = ({ list }) =>
 			<tr key={item.objectID}>
 				<td>
 					<a href={item.url}>
-						<p> {item.title} - posted by {item.author}</p>
+						<p className="disguise_result_link" > {item.title} - posted by {item.author}</p>
 					</a>
-					<a href={"https://news.ycombinator.com/item?id=" + item.objectID}>{item.num_comments} comments</a>
+					<a className="disguise_comment_link" href={"https://news.ycombinator.com/item?id=" + item.objectID}>{item.num_comments} comments</a>
 				</td>
 			</tr>
  		)}    
@@ -180,10 +180,10 @@ const TCTable = ({ list }) =>
 		{ list.map((item) =>
 			<tr key={item.publishedAt}>
           		<td>
-          			<a href={item.url}>
+          			<a className="disguise_result_link" href={item.url}>
 						<p>{item.title}</p>
 					</a>
-					<p> Author: {item.author} </p>
+					<p className="disguise_comment_link" > Author: {item.author} </p>
 				</td>
 			</tr>
  		)}    
@@ -203,10 +203,10 @@ const RedditTable = ({ list }) =>
 		{ list.map((item) =>
 			<tr key={item.created}>
           		<td>
-          			<a href={item.url}>
+          			<a className="disguise_result_link" href={item.url}>
 						<p>{item.title}</p>
           			</a>
-					<a href={"https://www.reddit.com" + item.permalink}>{item.num_comments} comments</a>
+					<a className="disguise_comment_link" href={"https://www.reddit.com" + item.permalink}>{item.num_comments} comments</a>
 				</td>
 			</tr>
  		)}    
