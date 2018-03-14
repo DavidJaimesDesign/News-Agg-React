@@ -62,16 +62,29 @@ class App extends Component {
 	}
 
 	fetchRedditTopStories(){
-		const snoowrap = require('snoowrap')
-		const otherRequester = new snoowrap({
-			userAgent: 'News Ag page',
-			clientId: `${REDDIT_CLIENT_ID}`,
-			clientSecret: `${REDDIT_SECRET}`,
-			username: `${REDDIT_USER}`,
-			password: `${REDDIT_PW}`
+		const rawjs = require('raw.js')
+		const reddit = new rawjs("news-agg-app")
+		reddit.setupOAuth2(`${REDDIT_CLIENT_ID}`, `${REDDIT_SECRET}`);
+		//TODO: fix this since it's hacky
+		var self = this
+
+		reddit.auth({"username": `${REDDIT_USER}`, "password": `${REDDIT_PW}`}, function(err, response) {
+			if(err) {
+				console.log("Unable to authenticate user: " + err);
+			} else {
+				reddit.hot({
+					r: `${SUBREDDIT_LIST}`,
+					limit: 5
+				}, function(err, response){
+					if(err){
+						console.log("Unable to get hot content" + err);
+					} else {
+						self.setRedditTopStories(response.children)
+					}
+
+				})
+			}
 		})
-		otherRequester.getSubreddit(`${SUBREDDIT_LIST}`).getHot({limit: 5})
-		.then(response => this.setRedditTopStories(response))
 	}
 
  	setHNTopstories(result) {
@@ -84,6 +97,7 @@ class App extends Component {
  	}
 
 	setRedditTopStories(result){
+		console.log(result)
 		this.setState({
 			RedditResults: result
 		})
@@ -201,12 +215,12 @@ const RedditTable = ({ list }) =>
 		</thead>
 		<tbody>
 		{ list.map((item) =>
-			<tr key={item.created}>
+			<tr key={item.data.created}>
           		<td>
-          			<a className="disguise_result_link" href={item.url}>
-						<p>{item.title}</p>
+          			<a className="disguise_result_link" href={item.data.url}>
+						<p>{item.data.title}</p>
           			</a>
-					<a className="disguise_comment_link" href={"https://www.reddit.com" + item.permalink}>{item.num_comments} comments</a>
+					<a className="disguise_comment_link" href={"https://www.reddit.com" + item.data.permalink}>{item.data.num_comments} comments</a>
 				</td>
 			</tr>
  		)}    

@@ -6,6 +6,7 @@
     "bootstrap": "^3.3.7",
     "dotenv": "^5.0.1",
     "dotenv-expand": "^4.2.0",
+    "raw.js": "^0.6.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
