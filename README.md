@@ -17,7 +17,7 @@ and where I got the inspiration for it<br>
 ## About
 
 I have a tendency to mindlessly browse Hacker News, Reddit, and other sites; I wanted to make a way where I could still read
-interesting articles without wasting time scrolling through multiple sites and not ever clicking on anything. This actually existed a while back with [My Headline Crawler|http://www.timqian.com/my-headline] [repo|https://github.com/timqian/my-headline-crawler], but it went dark many months ago and it seems like the original creator has moved on. So this is my attempt replicating it's functionality in React. It is still missing some functionality particularly Medium articles and switching through dates.
+interesting articles without wasting time scrolling through multiple sites and not ever clicking on anything. This actually existed a while back with [My Headline Crawler](http://www.timqian.com/my-headline) [repo](https://github.com/timqian/my-headline-crawler), but it went dark many months ago and it seems like the original creator has moved on. So this is my attempt replicating it's functionality in React. It is still missing some functionality particularly Medium articles and switching through dates.
 
 ## Available Scripts
 
