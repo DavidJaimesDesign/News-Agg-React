@@ -19,7 +19,7 @@ const PARAM_OFFSET='0'
 //Tech Chrunch path variables
 //Use NewsApi client library for this 
 const TC_BASE_PATH="https://newsapi.org/v2/"
-const TC_SEARCH_PARAMS="top-headlines?sources=techcrunch&apiKey="
+const TC_SEARCH_PARAMS="everything?sources=techcrunch&apiKey="
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
 
@@ -56,6 +56,7 @@ class App extends Component {
 	}
 
 	fetchTechCrunchTopStories(){
+		console.log(`${TC_BASE_PATH}${TC_SEARCH_PARAMS}${TC_KEY}`)
 		fetch(`${TC_BASE_PATH}${TC_SEARCH_PARAMS}${TC_KEY}`)
 		.then(response => response.json())
 		.then(result => this.setTechCrunchTopStories(result))
@@ -91,6 +92,7 @@ class App extends Component {
 		const { hits } = result
 		const { HNresultsKey } = this.state
 		const hitsArr = [...hits]
+		console.log(hitsArr)
 		this.setState({
 			HNresults: { [HNresultsKey]: {hits: hitsArr}}
 		})
@@ -108,7 +110,7 @@ class App extends Component {
 		const { TCresultsKey } = this.state
 		const articlesArr= [...articles]
 		this.setState({
-			TCresults: { [TCresultsKey]: {articles: articlesArr}}
+			TCresults: { [TCresultsKey]: {articles: articlesArr.slice(0,5)}}
 		})
 	}
 
