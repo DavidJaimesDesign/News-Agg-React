@@ -19,7 +19,7 @@ const PARAM_OFFSET='0'
 //Tech Chrunch path variables
 //Use NewsApi client library for this 
 const TC_BASE_PATH="https://newsapi.org/v2/"
-const TC_SEARCH_PARAMS="top-headlines?sources=techcrunch&apiKey="
+const TC_SEARCH_PARAMS="everything?sources=techcrunch&apiKey="
 const TC_KEY=process.env.REACT_APP_TC_API_KEY
 
 
@@ -97,7 +97,6 @@ class App extends Component {
  	}
 
 	setRedditTopStories(result){
-		console.log(result)
 		this.setState({
 			RedditResults: result
 		})
@@ -108,7 +107,7 @@ class App extends Component {
 		const { TCresultsKey } = this.state
 		const articlesArr= [...articles]
 		this.setState({
-			TCresults: { [TCresultsKey]: {articles: articlesArr}}
+			TCresults: { [TCresultsKey]: {articles: articlesArr.slice(0,5)}}
 		})
 	}
 
