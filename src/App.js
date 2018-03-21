@@ -56,7 +56,6 @@ class App extends Component {
 	}
 
 	fetchTechCrunchTopStories(){
-		console.log(`${TC_BASE_PATH}${TC_SEARCH_PARAMS}${TC_KEY}`)
 		fetch(`${TC_BASE_PATH}${TC_SEARCH_PARAMS}${TC_KEY}`)
 		.then(response => response.json())
 		.then(result => this.setTechCrunchTopStories(result))
@@ -92,14 +91,12 @@ class App extends Component {
 		const { hits } = result
 		const { HNresultsKey } = this.state
 		const hitsArr = [...hits]
-		console.log(hitsArr)
 		this.setState({
 			HNresults: { [HNresultsKey]: {hits: hitsArr}}
 		})
  	}
 
 	setRedditTopStories(result){
-		console.log(result)
 		this.setState({
 			RedditResults: result
 		})
