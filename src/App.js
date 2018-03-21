@@ -129,9 +129,9 @@ class App extends Component {
 				<Row>
 					<Col lg={4} md={4} mdOffset={4}>
 						<PageHeader className = "center_text break_title">
-						<h1>Take a Break</h1>
-						<h4> Read something useful</h4>
+						Take a Break
 						</PageHeader>
+						<h4 className = "center_text break_title"> Read something useful</h4>
 					</Col>
 				</Row>
 					<Col lg={6} md={6}>
