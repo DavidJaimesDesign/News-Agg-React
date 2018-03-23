@@ -1,0 +1,32 @@
+---
+language: node_js
+node_js:
+- '9'
+cache:
+  directories:
+    - node_modules
+
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY_TRAVIS
+  secret_access_key: $AWS_SECRET_KEY_TRAVIS
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+  repo: davidjaimesdesign/News-Agg-React
+  bucket: take-a-break
+  region: us-east-1
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: take-a-break 
+  key: latest.zip
+  bundle_type: zip
+  application: take-a-break-m 
+  deployment_group: take-a-break-travis 
+  region: us-east-1 
+  on: *2
+script:
+- zip -r latest *
+- mkdir -p dpl_cd_upload
+- mv latest.zip dpl_cd_upload/latest.zip
