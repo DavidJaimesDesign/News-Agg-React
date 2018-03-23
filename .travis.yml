@@ -17,8 +17,8 @@ deploy:
   bucket: take-a-break
   region: us-east-1
 - provider: codedeploy
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  access_key_id: $AWS_ACCESS_KEY_TRAVIS
+  secret_access_key: $AWS_SECRET_KEY_TRAVIS
   bucket: take-a-break 
   key: latest.zip
   bundle_type: zip
