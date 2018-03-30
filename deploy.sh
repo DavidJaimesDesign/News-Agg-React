@@ -3,7 +3,7 @@ set -e
 
 run_app(){
 	npm run build
-	serve -s build
+	./node_modules/.bin/serve -s build
 }
 
 run_app
